@@ -27,6 +27,7 @@ int lsh_mkdir(char **args);
 int lsh_cp(char **args);
 int lsh_mv(char **args);
 int lsh_pwd(char **args);
+int lsh_touch(char **args);
 
 /*
   List of builtin commands, followed by their corresponding functions.
@@ -36,7 +37,8 @@ char *builtin_str[] = {
   "help",
   "exit",
   "mkdir",
-  "pwd"
+  "pwd",
+  "touch"
 };
 
 int (*builtin_func[]) (char **) = {
@@ -45,6 +47,7 @@ int (*builtin_func[]) (char **) = {
   &lsh_exit,
   &lsh_mkdir,
   &lsh_pwd,
+  &lsh_touch
 };
 
 int lsh_num_builtins() {
@@ -71,6 +74,23 @@ int lsh_mkdir(char **args) {
   } else {
     if (stat(args[1],&sb) == -1) {
       mkdir(args[1], S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+    }
+  }
+  return 1;
+}
+
+int lsh_touch(char **args) {
+  printf("This is the touch command\n");
+  if (args[1] == NULL) {
+    fprintf(stderr, "lsh: expected argument to \"touch\"\n");
+  }
+  else{
+    if(access(args[1], F_OK) == 0){
+      fprintf(stderr, "lsh: file already exists\n");
+    }
+    else{
+      FILE *f = fopen(args[1], "w");
+      fclose(f);
     }
   }
   return 1;
