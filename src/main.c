@@ -46,9 +46,6 @@ int (*builtin_func[]) (char **) = {
   &lsh_help,
   &lsh_exit,
   &lsh_mkdir,
-  &lsh_cp,
-  %lsh_alias,
-  &lsh_mv
 };
 
 int lsh_num_builtins() {
@@ -66,32 +63,6 @@ int lsh_num_builtins() {
  */
 
 
-
-int lsh_alias(char **args) {
-  printf("Alias command'n");
-}
-
-int lsh_mv(char **args) {
-  printf("Move command\n");
-  if (args[1] == NULL || arg[2] == NULL) {
-    fprintf(stderr, "lsh: expected argument to \"mv\"n");
-  } else {
-    if (stat(args[1], &sb) != -1 && stat(args[2], &sb)) {
-      
-    } else {
-      printf("Path does'nt exists\n");
-    }
-  }
-}
-
-int lsh_cp(char **args) {
-  printf("Copy command\n");
-  if (args[1] == NULL || arg[2] == NULL) {
-    fprintf(stderr, "lsh: expected argument to \"mv\"n");
-  } else {
-    
-  }
-}
 
 int lsh_mkdir(char **args) {
   struct stat sb;
