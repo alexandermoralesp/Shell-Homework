@@ -16,7 +16,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-
+#include <limits.h> // PATH_MAX
 /*
   Function Declarations for builtin shell commands:
  */
@@ -26,6 +26,7 @@ int lsh_exit(char **args);
 int lsh_mkdir(char **args);
 int lsh_cp(char **args);
 int lsh_mv(char **args);
+int lsh_pwd(char **args);
 
 /*
   List of builtin commands, followed by their corresponding functions.
@@ -35,6 +36,7 @@ char *builtin_str[] = {
   "help",
   "exit",
   "mkdir",
+  "pwd"
 };
 
 int (*builtin_func[]) (char **) = {
@@ -42,6 +44,7 @@ int (*builtin_func[]) (char **) = {
   &lsh_help,
   &lsh_exit,
   &lsh_mkdir,
+  &lsh_pwd,
 };
 
 int lsh_num_builtins() {
@@ -64,7 +67,7 @@ int lsh_mkdir(char **args) {
   struct stat sb;
   printf("This is the mkdir command\n");
   if (args[1] == NULL) {
-    fprintf(stderr, "lsh: expected argument to \"mkdir\"n");
+    fprintf(stderr, "lsh: expected argument to \"mkdir\"\n");
   } else {
     if (stat(args[1],&sb) == -1) {
       mkdir(args[1], S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
@@ -72,6 +75,19 @@ int lsh_mkdir(char **args) {
   }
   return 1;
 }
+
+int lsh_pwd(char **args) {
+  char buf[PATH_MAX];
+  printf("This is the pwd command\n");
+  if (getcwd(buf, PATH_MAX) != NULL){
+    fprintf(stderr, "%s\n", buf);
+  }
+  else {
+    perror("lsh");
+  }
+  return 1;
+}
+
 
 int lsh_cd(char **args)
 {
