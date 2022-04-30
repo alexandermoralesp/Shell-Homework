@@ -35,10 +35,6 @@ char *builtin_str[] = {
   "help",
   "exit",
   "mkdir",
-
-  "alias",
-  "cp",
-  "mv"
 };
 
 int (*builtin_func[]) (char **) = {
