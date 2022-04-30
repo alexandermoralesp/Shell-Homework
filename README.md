@@ -11,3 +11,5 @@ Members:
 **mkdir:** create new directory
 
 **pwd:** print current working directory
+
+**touch:** create new file if it doesn't exists
